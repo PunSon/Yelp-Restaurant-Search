@@ -15,7 +15,7 @@ def index():
         params = {
             'term': term,
             'sort_by': 'rating',
-            'attributes': 'liked_by_vegetarians,hot_and_new',
+            'attributes': 'liked_by_vegetarians',
             'limit': limit
         }
         response = yelp_api.search_query(location=location, **params)
