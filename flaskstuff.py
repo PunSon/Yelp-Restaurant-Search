@@ -8,12 +8,12 @@ yelp_api = YelpAPI(api_key)
 def index():
     if request.method == 'POST':
         location = request.form['location']
-        #term = request.form['term']
+        term = request.form['term']
         limit = int(request.form['limit'])
 
         # Call Yelp API with user inputs
         params = {
-            'term': 'Vegetarian,Vegan',
+            'term': term,
             'sort_by': 'rating',
             'attributes': 'liked_by_vegetarians',
             'limit': limit
