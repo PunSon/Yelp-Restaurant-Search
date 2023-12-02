@@ -8,18 +8,22 @@ yelp_api = YelpAPI(api_key)
 def index():
     if request.method == 'POST':
         location = request.form['location']
-        term = request.form['term']
+        #term = request.form['term']
         limit = int(request.form['limit'])
 
         # Call Yelp API with user inputs
         params = {
-            'term': term,
+            'term': 'Vegetarian,Vegan',
             'sort_by': 'rating',
             'attributes': 'liked_by_vegetarians',
             'limit': limit
         }
         response = yelp_api.search_query(location=location, **params)
-        businesses = response['businesses']
+        businesses = response.get('businesses',[])
+        for business in businesses:
+            latitude = business.get('coordinates',{}).get('latitude')
+            longitude = business.get('coordinates',{}).get('longitude')
+            business['google_maps_link'] = f'https://www.google.com/maps?q={latitude},{longitude}'
 
         return render_template('results.html', businesses=businesses)
 
